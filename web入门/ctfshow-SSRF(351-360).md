@@ -238,7 +238,7 @@ header("Location:http://127.0.0.1/flag.php");
 
 第二种解法是利用dns重绑定漏洞，**大佬文章：https://zhuanlan.zhihu.com/p/89426041**
 
-![image-20220113024239776](image-20220113024239776.png)
+![image-20220113025537987](image/ctfshow-SSRF(351-360)/image-20220113025537987.png)
 
 在ceye上进行dns重绑定
 
