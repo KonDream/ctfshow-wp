@@ -1,4 +1,7 @@
+
+
 ## web29（通配符）
+
 ```php
 <?php
 error_reporting(0);
@@ -13,7 +16,7 @@ if(isset($_GET['c'])){
 }
 ```
 eval函数是把字符串作为PHP代码执行，过滤了flag，用通配符绕过
-payload：/?c=&#96;tac fla?.php&#96;; 
+payload：/?c=&#96;tac fla?.php&#96;;  
 
 ## web30（反引号代替system）
 ```php
