@@ -1756,8 +1756,8 @@ handler能够一行一行的浏览一个表中的数据，但是 handler 语句�
 
 首先查表：`payload：ctfshow';show tables;`
 
-![image-20220113183036894](image/ctfshow-sql注入 （171-253）/image-20220113183036894.png)
+![image-20220113183036894](image/ctfshow-sql注入(171-253)/image-20220113183036894.png)
 
 然后查表中内容，`payload：ctfshow';handler ctfshow_flagasa open;handler ctfshow_flagasa read first;`
 
-![image-20220113183231895](image/ctfshow-sql注入 （171-253）/image-20220113183231895.png)
+![image-20220113183231895](image/ctfshow-sql注入(171-253)/image-20220113183231895.png)
