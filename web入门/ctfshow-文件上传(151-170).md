@@ -6,7 +6,7 @@
 
 ## web151(前端校验)
 
-![image-20220114134736282](image/Untitled/image-20220114134736282.png)
+![image-20220114134736282](image/ctfshow-文件上传(151-170)/image-20220114134736282.png)
 
 前端校验，直接禁用js后上传一句话，或者上传png然后抓包改后缀
 
@@ -16,13 +16,13 @@
 
 前端+后端校验，这里是将一句话木马改为png后上传，再改后缀，经测试后端是MIME类型校验，改为png的image/png即可绕过
 
-![image-20220114135421176](image/Untitled/image-20220114135421176.png)
+![image-20220114135421176](image/ctfshow-文件上传(151-170)/image-20220114135421176.png)
 
 ## web153(.user.ini)
 
 这个题过滤了后缀php，一开始想着用php3，phtml等绕过，发现不能执行命令，然后访问upload时出现了不一样
 
-![image-20220114142337227](image/Untitled/image-20220114142337227.png)
+![image-20220114142337227](image/ctfshow-文件上传(151-170)/image-20220114142337227.png)
 
 nothing here？说明此处有个php页面，那么这个题考察的就是.user.ini的利用了
 
@@ -36,21 +36,21 @@ nothing here？说明此处有个php页面，那么这个题考察的就是.user
 
 **而且.user.ini只对同级目录下的文件起作用，同级目录下必须有个php文件才可以，这就是这个题的突破口。**
 
-![image-20220114142942340](image/Untitled/image-20220114142942340.png)
+![image-20220114142942340](image/ctfshow-文件上传(151-170)/image-20220114142942340.png)
 
 首先上传个.user.ini，在index.php中include进去k.png，然后上传带一句话的png
 
-![image-20220114143121987](image/Untitled/image-20220114143121987.png)
+![image-20220114143121987](image/ctfshow-文件上传(151-170)/image-20220114143121987.png)
 
 然后就是getshell后找flag了
 
-![image-20220114143254131](image/Untitled/image-20220114143254131.png)
+![image-20220114143254131](image/ctfshow-文件上传(151-170)/image-20220114143254131.png)
 
 ## web154(短标签)
 
 应该是对上传内容进行了过滤，不允许有php出现，那么就使用php短标签：<?= 代替 <?php
 
-![image-20220114144039737](image/Untitled/image-20220114144039737.png)
+![image-20220114144039737](image/ctfshow-文件上传(151-170)/image-20220114144039737.png)
 
 先传个带一句话的png，然后传.user.ini方法同上，最后拿shell找flag
 
@@ -62,7 +62,7 @@ nothing here？说明此处有个php页面，那么这个题考察的就是.user
 
 经测试，在上面的基础上过滤了文件内容中的 ] ，采用大括号进行绕过：``<?=eval($_POST{1});?>``
 
-![image-20220114145000175](image/Untitled/image-20220114145000175.png)
+![image-20220114145000175](image/ctfshow-文件上传(151-170)/image-20220114145000175.png)
 
 剩下操作同上
 
@@ -70,7 +70,7 @@ nothing here？说明此处有个php页面，那么这个题考察的就是.user
 
 有点难搞，过滤了 { 和 ； 想要写马进去有点绕，所以就直接命令执行吧：``<?=system('tac ../flag.*')?>``
 
-![image-20220114145952646](image/Untitled/image-20220114145952646.png)
+![image-20220114145952646](image/ctfshow-文件上传(151-170)/image-20220114145952646.png)
 
 ## web158(同上)
 
