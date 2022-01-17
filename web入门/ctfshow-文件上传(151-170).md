@@ -148,7 +148,9 @@ nothing here？说明此处有个php页面，那么这个题考察的就是.user
 
 2. 上传.user.ini，绑定一个不带后缀的文件k![image-20220117193202242](image/ctfshow-文件上传(151-170)/image-20220117193202242.png)
 
-3. 上传k，并包含远程vps地址，由于过滤了ip中的. 所以要将ip地址转数字，这里转：http://www.msxindl.com/tools/ip/ip_num.asp![image-20220117193804385](image/ctfshow-文件上传(151-170)/image-20220117193804385.png)
+3. 上传k，并包含远程vps地址，由于过滤了ip中的. 所以要将ip地址转数字，这里转：http://www.msxindl.com/tools/ip/ip_num.asp
+
+   ![image-20220117193804385](image/ctfshow-文件上传(151-170)/image-20220117193804385.png)
 
 4. 最后访问upload，即可getshell![image-20220117193859464](image/ctfshow-文件上传(151-170)/image-20220117193859464.png)
 
