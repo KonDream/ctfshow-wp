@@ -76,7 +76,7 @@ for i in range(1, len(ans)):
 
 最后得到一张隐隐约约有flag的图
 
-![](image/D.I.E&Trinity CTF新生赛/image-20220124032436413.png)
+![1](image/D.I.E&Trinity CTF新生赛/image-20220124032436413.png)
 
 ![image-20220124032647210](image/D.I.E&Trinity CTF新生赛/image-20220124032647210.png)
 
