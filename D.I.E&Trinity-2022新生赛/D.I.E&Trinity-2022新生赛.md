@@ -96,15 +96,15 @@ flag：flag{XqAe3QzK2ehD5fWv8jfBitPqHUw0}
 
 题目出题人换过了，最开始的附件是个doc，要手动改后缀。拿到压缩包找找有没有有用信息
 
-![image-20220124033444006](image/D.I.E&Trinity CTF新生赛/image-20220124033444006.png)
+![image-20220124033444006](image/D.I.E&Trinity-2022新生赛/image-20220124033444006.png)
 
 真滴有，下面那个打开发现需要密码，那密码就在key.txt中了，打开一看发现了问题
 
-![image-20220124033544163](image/D.I.E&Trinity CTF新生赛/image-20220124033544163.png)
+![image-20220124033544163](imageD.I.E&Trinity-2022新生赛/image-20220124033544163.png)
 
 零宽隐写，在线解一下：http://330k.github.io/misc_tools/unicode_steganography.html
 
-![image-20220124033721415](image/D.I.E&Trinity CTF新生赛/image-20220124033721415.png)
+![image-20220124033721415](image/D.I.E&Trinity-2022新生赛/image-20220124033721415.png)
 
 这个字符串有点问题，后面出题人说过了，应该是Because I like naruto best
 
