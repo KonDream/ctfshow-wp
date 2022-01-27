@@ -100,7 +100,7 @@ flag：flag{XqAe3QzK2ehD5fWv8jfBitPqHUw0}
 
 真滴有，下面那个打开发现需要密码，那密码就在key.txt中了，打开一看发现了问题
 
-![image-20220124033544163](imageD.I.E&Trinity-2022新生赛/image-20220124033544163.png)
+![image-20220124033544163](image/D.I.E&Trinity-2022新生赛/image-20220124033544163.png)
 
 零宽隐写，在线解一下：http://330k.github.io/misc_tools/unicode_steganography.html
 
