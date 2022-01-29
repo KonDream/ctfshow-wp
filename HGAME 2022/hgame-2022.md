@@ -178,3 +178,26 @@ Connection: close
 # hgame{I_b0ught_4_S3xy_sw1mSu1t}
 ```
 
+### easy_auth(jwt)
+
+随意注册个账户，抓返回包
+
+![image-20220129191505973](image/hgame-2022/image-20220129191505973.png)
+
+看到token是jwt，拿去解码，发现有密钥
+
+![image-20220129191650286](image/hgame-2022/image-20220129191650286.png)
+
+爆破得到密钥为空
+
+![image-20220129191753526](image/hgame-2022/image-20220129191753526.png)
+
+带着密钥，修改用户名和id
+
+![image-20220129191553050](image/hgame-2022/image-20220129191553050.png)
+
+将得到的jwt放入token中放包
+
+![image-20220129191835169](image/hgame-2022/image-20220129191835169.png)
+
+即以管理员身份登录，拿到flag
