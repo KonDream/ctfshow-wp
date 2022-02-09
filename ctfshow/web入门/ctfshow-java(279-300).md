@@ -11,11 +11,11 @@
 >- `%`的用途是在标志的属性为字符串类型时，计算OGNL表达式%{}中的值
 来到登录页面，进行测试
 
-![image-20220209202027317](image/ctfshow-java(279-300)/image-20220209202027317.png)
+![image-20220209202027317](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/web入门/image/ctfshow-java(279-300)/image-20220209202027317.png)
 
 提交后回显
 
-![image-20220209202050184](image/ctfshow-java(279-300)/image-20220209202050184.png)
+![image-20220209202050184](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/web入门/image/ctfshow-java(279-300)/image-20220209202050184.png)
 
 证明漏洞存在
 
@@ -35,7 +35,7 @@ POC：
 }
 ```
 
-![image-20220209202405576](image/ctfshow-java(279-300)/image-20220209202405576.png)
+![image-20220209202405576](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/web入门/image/ctfshow-java(279-300)/image-20220209202405576.png)
 
 最终payload:
 
