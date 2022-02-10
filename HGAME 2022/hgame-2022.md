@@ -201,3 +201,20 @@ Connection: close
 ![image-20220129191835169](image/hgame-2022/image-20220129191835169.png)
 
 即以管理员身份登录，拿到flag
+
+## Level Week2
+
+### Apache!
+
+搜apache ssrf https://github.com/sixpacksecurity/CVE-2021-40438
+
+直接打 payload：
+
+![image-20220202145808953](image/hgame-2022/image-20220202145808953.png)
+
+
+
+### webpack-engine
+
+点到最后查看源码，在vue里找到个base64解码两次就出了
+
