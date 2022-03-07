@@ -14,7 +14,7 @@ Clash for Windows(以下简称CFW)是一款基于go语言开发的代理客户�
 
 ​	那CFW是如何产生 xss 的呢？在配置项中，可以看到存在一些yml文件，这些文件一定是经过了某种规则的渲染进而呈现在这个页面上，这里不妨看一下文件结构
 
-![image-20220307150335494](image/Clash.for.Windows从XSS到RCE/image-20220307150335494.png)
+![image-20220307150335494](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/%E6%8A%80%E6%9C%AF/image/Clash.for.Windows从XSS到RCE/image-20220307150335494.png)
 
 ```yaml
 proxy-groups:
@@ -26,7 +26,7 @@ proxy-groups:
       - HK - 香港IEPL专线 - 01
 ```
 
-![image-20220307151051115](image/Clash.for.Windows从XSS到RCE/image-20220307151051115.png)
+![image-20220307151051115](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/%E6%8A%80%E6%9C%AF/image/Clash.for.Windows从XSS到RCE/image-20220307151051115.png)
 
 可以看到这里的 name 和 proxies 属性都会在页面上进行渲染，不妨跟踪一下渲染规则
 
@@ -79,7 +79,7 @@ proxy-groups:
     - xss-test
 ```
 
-![image-20220307152003821](image/Clash.for.Windows从XSS到RCE/image-20220307152003821.png)
+![image-20220307152003821](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/%E6%8A%80%E6%9C%AF/image/Clash.for.Windows从XSS到RCE/image-20220307152003821.png)
 
 成功弹窗
 
@@ -118,10 +118,10 @@ proxy-groups:
     - xss-test
 ```
 
-![image-20220307152455723](image/Clash.for.Windows从XSS到RCE/image-20220307152455723.png)
+![image-20220307152455723](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/%E6%8A%80%E6%9C%AF/image/Clash.for.Windows从XSS到RCE/image-20220307152455723.png)
 
 ### 漏洞危害
 
 ​	这样一个漏洞想要触发，现在我觉得是有点困难的，因为配置文件需手动导入或修改，这个漏洞爆出来后懂的人看一下就会知道有没有漏洞存在了，但不排除之前的在野利用，毕竟影响版本太广了，在不知情的情况下被上线了也是有可能的hhh，目前作者已经更新至v0.19.11，在新版本中，不再采用 innerHTML 属性。
 
-![image-20220307153845858](image/Clash.for.Windows从XSS到RCE/image-20220307153845858.png)
+![image-20220307153845858](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/%E6%8A%80%E6%9C%AF/image/Clash.for.Windows从XSS到RCE/image-20220307153845858.png)
