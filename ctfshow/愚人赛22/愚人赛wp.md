@@ -53,15 +53,15 @@ ctfshow(zhcxhbbshzhrblzsh)
 
 打开题目看见就是一串base64码，但是复制下来解码好像不太对，查看源代码时发现有一个可疑的js
 
-![image-20220402204542969](image/愚人赛wp/image-20220402204542969.png)
+![image-20220402204542969](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/愚人赛22/image/愚人赛wp/image-20220402204542969.png)
 
 跟踪一下
 
-![image-20220402204638965](image/愚人赛wp/image-20220402204638965.png)
+![image-20220402204638965](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/愚人赛22/image/愚人赛wp/image-20220402204638965.png)
 
 关键是这串东西，做了什么呢？
 
-![image-20220402204718455](image/愚人赛wp/image-20220402204718455.png)
+![image-20220402204718455](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/愚人赛22/image/愚人赛wp/image-20220402204718455.png)
 
 ```javascript
 document.addEventListener('copy', handler);
@@ -111,7 +111,7 @@ if(isset($_GET['c'])){
 
 有个图片，看看是啥
 
-![image-20220402205214018](image/愚人赛wp/image-20220402205214018.png)
+![image-20220402205214018](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/愚人赛22/image/愚人赛wp/image-20220402205214018.png)
 
 愚人节，果然
 
@@ -131,7 +131,7 @@ if (isset($_GET['c'])) {
 
 没有任何过滤，直接getshell了，但是我发现了两个假的flag，一个在phpinfo里，一个在flag.php里，真正的flag在备份文件中，当前目录下有个.swp，打印即可
 
-![image-20220402205508717](image/愚人赛wp/image-20220402205508717.png)
+![image-20220402205508717](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/愚人赛22/image/愚人赛wp/image-20220402205508717.png)
 
 ## Easy_game
 
@@ -205,6 +205,6 @@ for i in range(5):
     time.sleep(2)
 ```
 
-![image-20220402205819512](image/愚人赛wp/image-20220402205819512.png)
+![image-20220402205819512](https://cdn.jsdelivr.net/gh/KonDream/ctfshow-wp/ctfshow/愚人赛22/image/愚人赛wp/image-20220402205819512.png)
 
 脚本不太稳定，量力而行
